@@ -1,34 +1,10 @@
-board = [
-    [7,8,0,4,0,0,1,2,0],
-    [6,0,0,0,7,5,0,0,9],
-    [0,0,0,6,0,1,0,7,8],
-    [0,0,7,0,4,0,2,6,0],
-    [0,0,1,0,5,0,9,3,0],
-    [9,0,4,0,6,0,0,0,5],
-    [0,7,0,3,0,0,0,1,2],
-    [1,2,0,0,0,7,4,0,0],
-    [0,4,9,2,0,6,0,0,7]
-]
+def find_empty(board):
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if board[i][j] == 0:
+                return (i, j)  # row, col
 
-
-def solve(board):
-    find = find_empty(board)
-    if not find:
-        return True
-    else:
-        row, col = find
-
-    for i in range(1,10):
-        if valid(board, i, (row, col)):
-            board[row][col] = i
-
-            if solve(board):
-                return True
-
-            board[row][col] = 0
-
-    return False
-
+    return None
 
 def valid(board, num, pos):
     # Check row
@@ -53,6 +29,25 @@ def valid(board, num, pos):
     return True
 
 
+def solve(board):
+    find = find_empty(board)
+    if not find:
+        return True
+    else:
+        row, col = find
+
+    for i in range(1,10):
+        if valid(board, i, (row, col)):
+            board[row][col] = i
+
+            if solve(board):
+                return True
+
+            board[row][col] = 0
+
+    return False
+
+
 def print_board(board):
     for i in range(len(board)):
         if i % 3 == 0 and i != 0:
@@ -68,13 +63,17 @@ def print_board(board):
                 print(str(board[i][j]) + " ", end="")
 
 
-def find_empty(board):
-    for i in range(len(board)):
-        for j in range(len(board[0])):
-            if board[i][j] == 0:
-                return (i, j)  # row, col
-
-    return None
+board = [
+    [7,8,0,4,0,0,1,2,0],
+    [6,0,0,0,7,5,0,0,9],
+    [0,0,0,6,0,1,0,7,8],
+    [0,0,7,0,4,0,2,6,0],
+    [0,0,1,0,5,0,9,3,0],
+    [9,0,4,0,6,0,0,0,5],
+    [0,7,0,3,0,0,0,1,2],
+    [1,2,0,0,0,7,4,0,0],
+    [0,4,9,2,0,6,0,0,7]
+]
 
 print_board(board)
 solve(board)
